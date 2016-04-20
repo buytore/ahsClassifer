@@ -2,3 +2,6 @@ ftp://ftp.ncbi.nlm.nih.gov/pub/pmc/
 
 SharePoint REST API Examples
 https://github.com/OfficeDev/SharePoint-Add-in-REST-OData-BasicDataOperations
+
+Reading Text File with SKLearn
+http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_files.html
