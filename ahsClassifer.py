@@ -125,16 +125,3 @@ def process_many_files():
 
 if __name__ == '__main__':
     app.run()
-    <form action="" method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
-    </form>
-    '''
-
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
-
-if __name__ == '__main__':
-    app.run()

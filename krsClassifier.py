@@ -1,6 +1,6 @@
-Created on Tue Apr 12 07:32:08 2016
-@author: markbannan
-"""
+#Created on Tue Apr 12 07:32:08 2016
+#@author: markbannan
+
 from sklearn.datasets import fetch_20newsgroups
 import os
 
