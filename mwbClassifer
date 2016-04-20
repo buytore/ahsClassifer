@@ -1,0 +1,73 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Apr 12 07:32:08 2016
+@author: markbannan
+"""
+from sklearn.datasets import load_files
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+import os
+
+categories = ['Addiction', 'AIDS', 'Alcohol_Alcohol', 'Allergy', 'Arthritis', 
+              'Blood', 'Brain', 'Cancer', 'Cardiovasc_Res', 'Diabetes', 'Heart']
+# categories = ['alt.atheism', 'soc.religion.christian', 'comp.graphics', 'sci.med']
+
+pmcData = load_files('_learn/', description=None, categories=None, load_content=True, 
+                            shuffle=True, encoding=None, decode_error='strict', random_state=0)
+
+count_vect = CountVectorizer()
+X_train_counts = count_vect.fit_transform(pmcData.data)
+X_train_counts.shape
+
+tf_transformer = TfidfTransformer(use_idf=False).fit(X_train_counts)
+X_train_tf = tf_transformer.transform(X_train_counts)
+X_train_tf.shape
+
+tfidf_transformer = TfidfTransformer()
+X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
+X_train_tfidf.shape
+
+# Training the classifier
+
+from sklearn.naive_bayes import MultinomialNB
+clf = MultinomialNB().fit(X_train_tfidf, pmcData.target)
+
+
+#docs_new = ['God is love', 'OpenGL on the GPU is fast']
+
+docs_new = load_files('_test/', description=None, categories=None, load_content=True, 
+                            shuffle=True, encoding=None, decode_error='strict', random_state=0)
+"""
+X_new_counts = count_vect.transform(docs_new)
+X_new_tfidf = tfidf_transformer.transform(X_new_counts)
+
+predicted = clf.predict(X_new_tfidf)
+
+for doc, category in zip(docs_new, predicted):
+    print "We are here"
+    print('%r => %s' % (doc, pmcData.target_names[category]))
+""" 
+# BUILD KRS CLASSIFIER AND TRAINING DATA
+
+path = os.path.join(os.getcwd(), '_test') 
+#path = os.getcwd() + '\\_test\\'                               #Get the current directory
+#path = 'C:\Users\markbannan\python\py3\nlEg\krs\text\'
+filenames = next(os.walk(path))[2]                  #Get all the files in current directory
+
+docs_krs =[]
+for f in filenames:
+    filename, file_extension = os.path.splitext(f)
+    #print "this is the file name: ", filename
+    #print "this is the file extension: ", file_extension
+    if file_extension == ".txt":
+        krs_file = open('text\\'  + f, "r")
+        krs_file_content = krs_file.read()
+        docs_krs.append(krs_file_content)
+        
+X_new_counts = count_vect.transform(docs_krs)
+X_new_tfidf = tfidf_transformer.transform(X_new_counts)
+
+predicted = clf.predict(X_new_tfidf)
+
+for doc, category in zip(docs_new, predicted):
+    print('%r => %s' % (doc, pmcData.target_names[category]))
