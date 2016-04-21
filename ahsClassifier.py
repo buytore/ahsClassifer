@@ -122,6 +122,6 @@ def process_many_files():
             textInfo = convert_pdf_to_txt(f)
             write_Text_File(textInfo, filename, file_extension)   
     
-
+# THis is just a test
 if __name__ == '__main__':
     app.run()
