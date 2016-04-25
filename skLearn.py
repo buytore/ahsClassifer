@@ -23,5 +23,16 @@ predicted = text_clf.predict(dsTest.data)
 
 print(np.mean(predicted == dsTest.target))
 
+print(metrics.classification_report(dsTest.target, predicted,target_names=dsTest.target_names))
+print (metrics.confusion_matrix(dsTest.target, predicted))
 
-''''works well with only two categories of CT'''
+
+
+from sklearn.metrics import precision_score
+print precision_score(dsTest.target, predicted, average = None)
+
+count_vect = CountVectorizer()
+X_train_counts = count_vect.fit_transform(ds.data)
+count_vect.vocabulary_.get(u'cancer')
+
+http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html
